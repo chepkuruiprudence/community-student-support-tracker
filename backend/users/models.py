@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 from django.db import models
 
 class Profile(models.Model):
@@ -12,3 +12,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
+
+class User(AbstractUser):
+    is_student = models.BooleanField(default=True)
+    is_donor = models.BooleanField(default=False)
