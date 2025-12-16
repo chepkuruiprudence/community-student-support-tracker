@@ -1,3 +1,12 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
+from .models import Need
+from .serializers import NeedSerializer
 
-# Create your views here.
+class NeedViewSet(ModelViewSet):
+    serializer_class = NeedSerializer
+
+    def get_queryset(self):
+        return Need.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
