@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Expense
-from .serializers import ExpenseSerializer
+from expenses.serializers import ExpenseSerializer
 
 class ExpenseViewSet(ModelViewSet):
     serializer_class = ExpenseSerializer

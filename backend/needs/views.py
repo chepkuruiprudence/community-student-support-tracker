@@ -1,6 +1,6 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Need
-from .serializers import NeedSerializer
+from needs.serializers import NeedSerializer
 
 class NeedViewSet(ModelViewSet):
     serializer_class = NeedSerializer
