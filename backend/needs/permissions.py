@@ -8,3 +8,8 @@ class IsStudent(BasePermission):
 class IsOwnerStudent(BasePermission):
     def has_object_permission(self, request, view, obj):
         return request.user.is_authenticated and obj.student == request.user
+
+
+class IsDonor(BasePermission):
+    def has_permission(self, request, view):
+        return request.user.is_authenticated and request.user.is_donor
