@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings  # Use this instead of importing User directly
 
 class Need(models.Model):
     STATUS_CHOICES = (
@@ -7,7 +7,7 @@ class Need(models.Model):
         ('funded', 'Funded'),
     )
 
-    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='needs')
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='needs')
     title = models.CharField(max_length=200)
     description = models.TextField()
     amount_required = models.DecimalField(max_digits=10, decimal_places=2)
