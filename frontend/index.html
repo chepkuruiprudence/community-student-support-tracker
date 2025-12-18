@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>EduSupport</title>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.is_student) location.href = "student.html";
+    if (user?.is_donor) location.href = "donor.html";
+  </script>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-slate-100 flex items-center justify-center h-screen">
+
+<body class="bg-slate-100 flex items-center justify-center h-screen">
+
+<div class="bg-white p-6 rounded w-96 space-y-4">
+  <h2 class="text-xl font-bold text-center">EduSupport</h2>
+
+  <select id="role" class="border p-2 w-full">
+    <option value="student">Student</option>
+    <option value="donor">Donor</option>
+  </select>
+
+  <input id="username" placeholder="Username" class="border p-2 w-full">
+  <input id="email" placeholder="Email" class="border p-2 w-full">
+  <input id="password" type="password" placeholder="Password" class="border p-2 w-full">
+
+  <button id="registerBtn" class="bg-blue-600 text-white w-full p-2">Register</button>
+
+  <p class="text-center text-sm">
+  Already registered?
+  <a href="login.html" class="text-blue-600 underline">Login</a>
+  </p>
+</div>
+
+<script src="app.js"></script>
+</body>
+
+<script src="app.js"></script>
+</body>
+</html>
