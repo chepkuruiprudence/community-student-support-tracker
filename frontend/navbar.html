@@ -1,0 +1,23 @@
+// navbar.js
+const navbarContainer = document.getElementById("navbar-container");
+
+const user = JSON.parse(localStorage.getItem("user"));
+
+if (user) {
+  navbarContainer.innerHTML = `
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+      <div class="text-xl font-bold text-blue-600">EduSupport</div>
+      <div class="space-x-6">
+        <a href="index.html" class="text-gray-700 hover:text-blue-600 transition duration-200 font-medium">Home</a>
+        ${user.is_student ? `<a href="student.html" class="text-gray-700 hover:text-blue-600 transition duration-200 font-medium">Student Dashboard</a>` : ""}
+        ${user.is_donor ? `<a href="donor.html" class="text-gray-700 hover:text-blue-600 transition duration-200 font-medium">Donor Dashboard</a>` : ""}
+      </div>
+      <button id="logoutBtn" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md transition duration-200">Logout</button>
+    </nav>
+  `;
+
+  document.getElementById("logoutBtn").onclick = () => {
+    localStorage.clear();
+    window.location.href = "index.html";
+  };
+}
