@@ -6,7 +6,7 @@ class ExpenseViewSet(ModelViewSet):
     serializer_class = ExpenseSerializer
 
     def get_queryset(self):
-        return Expense.objects.filter(user=self.request.user)
+        return Expense.objects.filter(student=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(student=self.request.user)

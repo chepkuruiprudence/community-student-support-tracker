@@ -5,29 +5,29 @@
   <title>Donor Dashboard | EduSupport</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-slate-100 min-h-screen">
+<body class="bg-slate-50 min-h-screen">
 
-<!-- Auth check -->
 <script>
-const user = JSON.parse(localStorage.getItem("user"));
-if (!user || !user.is_donor) window.location.replace("index.html");
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.is_donor) window.location.replace("index.html");
 </script>
 
-<!-- Navbar -->
 <div id="navbar-container"></div>
 <script src="navbar.js"></script>
 
 <div class="container mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-6">Student Needs</h2>
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold text-slate-800 text-center md:text-left">Available Student Needs</h1>
+    <p class="text-slate-600 text-center md:text-left">Every pledge brings a student closer to their goals.</p>
+  </header>
 
-  <!-- List of Needs -->
-  <div id="needs" class="grid md:grid-cols-2 gap-4"></div>
+  <div id="donor-needs-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="animate-pulse bg-white h-64 rounded-xl border border-slate-200"></div>
+    <div class="animate-pulse bg-white h-64 rounded-xl border border-slate-200"></div>
+    <div class="animate-pulse bg-white h-64 rounded-xl border border-slate-200"></div>
+  </div>
 </div>
 
 <script src="app.js"></script>
-<script>
-  // Load donor view
-  if (document.getElementById("needs")) loadDonor();
-</script>
 </body>
 </html>
