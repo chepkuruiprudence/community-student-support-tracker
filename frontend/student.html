@@ -2,14 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Dashboard | EduSupport</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  
 </head>
 
 <body class="bg-slate-100 min-h-screen">
 
 <script>
+  // Auth Check: Redirect if not a student
   const user = JSON.parse(localStorage.getItem("user"));
   if (!user || !user.is_student) location.replace("index.html");
 </script>
@@ -17,30 +18,55 @@
 <div id="navbar-container"></div>
 <script src="navbar.js"></script>
 
-<div class="container mx-auto p-6">
-  <h2 class="text-2xl font-bold mb-6">My Needs Dashboard</h2>
+<div class="container mx-auto p-6 max-w-5xl"> 
+  
+  <h2 class="text-3xl font-bold mb-8 text-slate-800 text-center">My Support Dashboard</h2>
 
-  <div class="bg-white p-6 rounded shadow mb-6 w-full md:w-1/2">
-    <h3 class="text-xl font-semibold mb-4">Create a New Need</h3>
-    <input id="newNeedTitle" class="border p-2 w-full mb-2 rounded" placeholder="Need Title">
-    <input id="newNeedAmount" type="number" class="border p-2 w-full mb-2 rounded" placeholder="Amount Required">
-    <textarea id="newNeedDesc" class="border p-2 w-full mb-2 rounded" placeholder="Description"></textarea>
-    <button
-  type="button"
-  onclick="createNeed()"
-  class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
->
-  Create Need
-</button>
+  <div id="spending-summary" class="mb-8"></div>
 
+  <div class="flex justify-center mb-12">
+    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 w-full">
+      <h3 class="text-xl font-bold mb-6 text-slate-800 flex items-center gap-2">
+        <span class="bg-blue-100 text-blue-600 p-1 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+        </span>
+        Create a New Support Request
+      </h3>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Title</label>
+          <input id="newNeedTitle" class="border border-slate-200 p-3 w-full rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="e.g. Semester 2 Textbooks">
+        </div>
+        <div>
+          <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Amount Required ($)</label>
+          <input id="newNeedAmount" type="number" class="border border-slate-200 p-3 w-full rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="0.00">
+        </div>
+      </div>
+      
+      <div class="mb-6">
+        <label class="text-[10px] font-bold text-slate-400 uppercase ml-1">Description</label>
+        <textarea id="newNeedDesc" class="border border-slate-200 p-3 w-full rounded-xl h-24 focus:ring-2 focus:ring-blue-500 outline-none transition" placeholder="Explain how these funds will help your studies..."></textarea>
+      </div>
 
+      <div class="flex justify-end">
+        <button type="button" onclick="createNeed()" class="bg-blue-600 text-white font-bold px-8 py-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg hover:shadow-blue-200 active:scale-95">
+          Submit Request
+        </button>
+      </div>
+    </div>
   </div>
 
-  <div id="needs" class="grid md:grid-cols-2 gap-4"></div>
-</div>
+  <hr class="border-slate-200 mb-12">
 
-</body>
+  <h3 class="text-lg font-bold mb-6 text-slate-700 uppercase tracking-widest text-center">Your Active Needs</h3>
+  <div id="needs" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
+
+</div>
 
 <script src="app.js"></script>
 
+</body>
 </html>
