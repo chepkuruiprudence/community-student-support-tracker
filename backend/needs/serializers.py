@@ -10,4 +10,5 @@ class NeedSerializer(serializers.ModelSerializer):
             'amount_pledged',
             'status',
             'created_at'
+            'expenses',
         ]

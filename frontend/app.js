@@ -1,15 +1,12 @@
 const API = "http://127.0.0.1:8000/api";
 
 /* ✅ AUTH HELPER */
-window.authHeaders = function () {
-    const token = localStorage.getItem("token");
-    return {
-        "Content-Type": "application/json",
-        "Authorization": `Token ${token}`
-    };
-};
+window.authHeaders = () => ({
+    "Content-Type": "application/json",
+    "Authorization": `Token ${localStorage.getItem("token")}`
+});
 
-/* ✅ STUDENT: LOAD MY NEEDS */
+/* ✅ STUDENT: LOAD NEEDS WITH SPENDING LOGS */
 window.loadStudent = async function () {
     const res = await fetch(`${API}/needs/`, { headers: authHeaders() });
     if (!res.ok) return;
@@ -18,25 +15,46 @@ window.loadStudent = async function () {
     const container = document.getElementById("needs");
     if (!container) return;
 
-    container.innerHTML = needs.map(n => `
+    container.innerHTML = needs.map(n => {
+        // Calculate Total Spent and Balance
+        const totalSpent = n.expenses ? n.expenses.reduce((sum, e) => sum + parseFloat(e.amount_spent), 0) : 0;
+        const remainingBalance = (parseFloat(n.amount_pledged) - totalSpent).toFixed(2);
+
+        return `
         <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
             <div class="flex justify-between items-start mb-2">
                 <h3 class="font-bold text-lg text-slate-800">${n.title}</h3>
                 <span class="px-2 py-1 text-xs font-bold rounded bg-blue-100 text-blue-700 uppercase">${n.status}</span>
             </div>
             <p class="text-slate-600 mb-4">${n.description || ""}</p>
-            <div class="grid grid-cols-2 gap-4 text-sm border-t pt-4">
+            
+            <div class="grid grid-cols-3 gap-2 text-[11px] bg-slate-50 p-3 rounded-lg border border-slate-100 mb-4">
                 <div>
-                    <p class="text-slate-400">Required</p>
+                    <p class="text-slate-400 font-bold uppercase">Goal</p>
                     <p class="font-bold text-slate-800">$${n.amount_required}</p>
                 </div>
                 <div>
-                    <p class="text-slate-400">Pledged</p>
+                    <p class="text-slate-400 font-bold uppercase">Pledged</p>
                     <p class="font-bold text-green-600">$${n.amount_pledged}</p>
+                </div>
+                <div>
+                    <p class="text-slate-400 font-bold uppercase">Balance</p>
+                    <p class="font-bold text-blue-600">$${remainingBalance}</p>
+                </div>
+            </div>
+
+            <div class="border-t pt-4">
+                <p class="text-[10px] font-bold text-slate-400 uppercase mb-2">Log New Expense</p>
+                <div class="flex flex-col gap-2">
+                    <input type="text" id="exDesc${n.id}" placeholder="What was bought?" class="border rounded px-2 py-1 text-sm focus:ring-1 focus:ring-blue-500 outline-none">
+                    <div class="flex gap-2">
+                        <input type="number" id="exAmt${n.id}" placeholder="Amount" class="border rounded px-2 py-1 text-sm w-full focus:ring-1 focus:ring-blue-500 outline-none">
+                        <button onclick="logExpense(${n.id}, ${remainingBalance})" class="bg-slate-800 text-white px-3 py-1 rounded text-sm hover:bg-black transition">Log</button>
+                    </div>
                 </div>
             </div>
         </div>
-    `).join("");
+    `}).join("");
 };
 
 /* ✅ STUDENT: CREATE NEED */
@@ -59,13 +77,42 @@ window.createNeed = async function () {
 
     if (res.ok) {
         alert("Need created!");
-        location.reload();
+        loadStudent(); // Refresh list without full reload
+        document.getElementById("newNeedTitle").value = "";
+        document.getElementById("newNeedAmount").value = "";
+        document.getElementById("newNeedDesc").value = "";
     } else {
         alert("Error creating need");
     }
 };
 
-/* ✅ DONOR: LOAD DASHBOARD (WITH EXPENSES) */
+/* ✅ STUDENT: LOG EXPENSE ACTION */
+window.logExpense = async function (needId, balance) {
+    const description = document.getElementById(`exDesc${needId}`).value;
+    const amount = document.getElementById(`exAmt${needId}`).value;
+
+    if (!description || !amount) return alert("Fill in both fields");
+    if (parseFloat(amount) > balance) return alert("Error: You cannot spend more than the current pledged balance!");
+
+    const res = await fetch(`${API}/expenses/`, {
+        method: "POST",
+        headers: authHeaders(),
+        body: JSON.stringify({
+            need: parseInt(needId),
+            description: description,
+            amount_spent: parseFloat(amount)
+        })
+    });
+
+    if (res.ok) {
+        alert("Expense recorded!");
+        loadStudent();
+    } else {
+        alert("Failed to log expense.");
+    }
+};
+
+/* ✅ DONOR: LOAD DASHBOARD (WITH SPENDING HISTORY) */
 window.loadDonorDashboard = async function () {
     const container = document.getElementById("donor-needs-container");
     if (!container) return;
@@ -79,14 +126,13 @@ window.loadDonorDashboard = async function () {
         const required = parseFloat(n.amount_required) || 1;
         const progress = Math.min((pledged / required) * 100, 100).toFixed(0);
 
-        // Logic to show expenses
         const expensesHtml = n.expenses && n.expenses.length > 0 
             ? n.expenses.map(e => `
                 <div class="flex justify-between text-xs bg-slate-50 p-2 rounded border-l-2 border-orange-400 mb-1">
                     <span>${e.description}</span>
                     <span class="font-bold">-$${e.amount_spent}</span>
                 </div>`).join('')
-            : `<p class="text-xs text-slate-400 italic">No expenses logged yet.</p>`;
+            : `<p class="text-xs text-slate-400 italic text-center">No spending recorded yet.</p>`;
 
         return `
         <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
@@ -141,7 +187,7 @@ window.pledgeMoney = async function (needId) {
     }
 };
 
-/* ✅ AUTH: REGISTER & LOGIN */
+/* ✅ AUTH & DOM CONTENT LOADED */
 document.addEventListener("DOMContentLoaded", () => {
     const user = JSON.parse(localStorage.getItem("user"));
 
@@ -161,6 +207,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 })
             });
             if (res.ok) { alert("Registered!"); location.href = "login.html"; }
+            else { alert("Registration failed. Try a different username."); }
         };
     }
 
@@ -181,11 +228,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("user", JSON.stringify(data));
                 location.href = data.is_student ? "student.html" : "donor.html";
-            } else { alert("Login Failed"); }
+            } else { alert("Login Failed: Check your username or password."); }
         };
     }
 
-    // Auto-Loader
+    // Auto-Loader based on Page & Role
     if (user?.is_student && document.getElementById("needs")) loadStudent();
     if (user?.is_donor && document.getElementById("donor-needs-container")) loadDonorDashboard();
 });
