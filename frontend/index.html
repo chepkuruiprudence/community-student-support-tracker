@@ -6,37 +6,140 @@
     <title>EduSupport | Empowering Students through Transparency</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Inter', sans-serif; }</style>
+    <style>
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .hero-gradient {
+            background: radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent),
+                        radial-gradient(circle at bottom left, rgba(37, 99, 235, 0.08), transparent);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+    </style>
 </head>
-<body class="bg-slate-50 text-slate-900">
+<body class="bg-slate-50 text-slate-900 hero-gradient min-h-screen">
 
     <div id="navbar-container"></div>
 
-    <header class="container mx-auto px-6 py-20 lg:py-32 flex flex-col items-center text-center">
-        <span class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">Transparency in Giving</span>
-        <h1 class="text-5xl lg:text-7xl font-bold text-slate-900 mb-8 max-w-4xl leading-tight">
-            Education is a right, <span class="text-blue-600">not a luxury.</span>
-        </h1>
-        <p class="text-lg text-slate-600 mb-10 max-w-2xl leading-relaxed">
-            EduSupport connects students in need with donors who care. We ensure every dollar is tracked, so you can see the direct impact of your generosity.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4">
-        <a href="javascript:void(0)" onclick="handleRoleSelection('student')" 
-           class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-200 active:scale-95 text-center">
-            I am a Student
-        </a>
-        <a href="javascript:void(0)" onclick="handleRoleSelection('donor')" 
-           class="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 transition active:scale-95 text-center">
-            I want to Donate
-        </a>
-    </div>
-    </header>
+    <main class="pt-16 lg:pt-20">
+        
+        <header class="container mx-auto px-6 py-10 lg:py-16 flex flex-col items-center text-center">
+            <div class="animate-float mb-6">
+                <span class="bg-blue-100 text-blue-700 px-4 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-blue-200">
+                    Transparency in Giving
+                </span>
+            </div>
+            
+            <h1 class="text-5xl lg:text-7xl font-bold text-slate-900 mb-6 max-w-4xl leading-tight tracking-tight">
+                Education is a right, <br>
+                <span class="text-blue-600">not a luxury.</span>
+            </h1>
+            
+            <p class="text-lg text-slate-600 mb-8 max-w-2xl leading-relaxed">
+                EduSupport connects ambitious students with donors who care. 
+                We track every dollar, ensuring your impact is seen and felt.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+                <a href="javascript:void(0)" onclick="handleRoleSelection('student')" 
+                   class="bg-blue-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-blue-700 transition shadow-lg shadow-blue-200 text-center min-w-[200px]">
+                    I am a Student
+                </a>
+                <a href="javascript:void(0)" onclick="handleRoleSelection('donor')" 
+                   class="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-xl font-bold hover:bg-slate-50 transition text-center min-w-[200px]">
+                    I want to Donate
+                </a>
+            </div>
+        </header>
 
-    <footer class="border-t border-slate-200 py-12">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-slate-400 text-sm">© 2025 EduSupport Project. All rights reserved.</p>
-        </div>
-    </footer>
+        <section class="container mx-auto px-6 py-12">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-slate-800">Bridging the Gap</h2>
+                <p class="text-slate-500">Real support for real student needs.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition hover:shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=400&q=80" alt="Books" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 mb-1">Learning Materials</h4>
+                        <p class="text-xs text-slate-500">Helping students afford textbooks and research equipment.</p>
+                    </div>
+                </div>
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition hover:shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=400&q=80" alt="Tuition" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 mb-1">Tuition Support</h4>
+                        <p class="text-xs text-slate-500">Assisting with outstanding fees to keep students in class.</p>
+                    </div>
+                </div>
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition hover:shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=400&q=80" alt="Tech" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 mb-1">Tech Essentials</h4>
+                        <p class="text-xs text-slate-500">Providing laptops and internet access for digital learning.</p>
+                    </div>
+                </div>
+                <div class="group bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 transition hover:shadow-xl">
+                    <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=400&q=80" alt="Daily" class="w-full h-40 object-cover group-hover:scale-105 transition duration-500">
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 mb-1">Daily Expenses</h4>
+                        <p class="text-xs text-slate-500">Covering transportation and basic student sustenance.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="container mx-auto px-6 py-12 border-t border-slate-100">
+             <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="p-6">
+                    <div class="text-blue-600 mb-4 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Verified Needs</h3>
+                    <p class="text-slate-500 text-sm">Requests are vetted to ensure funds stay in education.</p>
+                </div>
+
+                <div class="p-6">
+                    <div class="text-blue-600 mb-4 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Direct Impact</h3>
+                    <p class="text-slate-500 text-sm">Your donations go straight to the listed student needs.</p>
+                </div>
+
+                <div class="p-6">
+                    <div class="text-blue-600 mb-4 flex justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </div>
+                    <h3 class="font-bold mb-2">Full Visibility</h3>
+                    <p class="text-slate-500 text-sm">Track real-time updates on how funds are utilized.</p>
+                </div>
+             </div>
+        </section>
+
+        <footer class="mt-12 border-t border-slate-200 py-10 bg-white">
+            <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-lg font-bold text-slate-800">EduSupport</div>
+                <p class="text-slate-400 text-xs">© 2025 EduSupport Project. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-slate-400 hover:text-blue-600 transition text-xs font-medium">Privacy</a>
+                    <a href="#" class="text-slate-400 hover:text-blue-600 transition text-xs font-medium">Terms</a>
+                </div>
+            </div>
+        </footer>
+    </main>
+
     <script src="app.js"></script>
     <script src="navbar.js"></script>
 </body>
