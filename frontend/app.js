@@ -206,7 +206,7 @@ window.loadDonorDashboard = async function () {
                 <div class="mt-4 pt-4 border-t"><p class="text-[10px] font-bold text-slate-400 uppercase mb-2 text-center">Student Spending History</p>${expensesHtml}</div>
             </div>
             <div class="p-4 bg-slate-50 border-t mt-auto">
-                ${n.status !== 'funded' ? `<div class="flex gap-2"><input type="number" id="p${n.id}" placeholder="Amount" class="border rounded-lg px-3 py-2 w-full text-sm"><button onclick="pledgeMoney(${n.id})" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Pledge</button></div>` : `<div class="text-center text-green-600 font-bold text-sm">Fully Funded 🎉</div>`}
+                ${n.status !== 'funded' ? `<div class="flex gap-2"><input type="number" id="p${n.id}" placeholder="Amount" class="border rounded-lg px-3 py-2 w-full text-sm"><button onclick="pledgeMoney(${n.id})" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-bold">Pledge</button></div>` : `<div class="text-center text-green-600 font-bold text-sm">Fully Funded </div>`}
             </div>
         </div>`;
     }).join("");
@@ -227,3 +227,106 @@ document.addEventListener("DOMContentLoaded", () => {
     if (user?.is_student && document.getElementById("needs")) loadStudent();
     if (user?.is_donor && document.getElementById("donor-needs-container")) loadDonorDashboard();
 });
+
+/* ✅ AUTH: LOGIN */
+window.handleLogin = async function () {
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    if (!username || !password) return alert("Please fill in all fields");
+
+    try {
+        const res = await fetch(`${API}/users/login/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("user", JSON.stringify(data));
+
+            // Redirect based on role
+            if (data.is_student) location.href = "student.html";
+            else if (data.is_donor) location.href = "donor.html";
+        } else {
+            alert(data.error || "Login failed. Check your credentials.");
+        }
+    } catch (err) {
+        alert("Server connection failed.");
+    }
+};
+
+/* ✅ AUTH: REGISTRATION */
+window.handleRegister = async function (isStudentRole) {
+    const username = document.getElementById("regUser").value;
+    const password = document.getElementById("regPass").value;
+
+    if (!username || !password) return alert("Please fill in all fields");
+
+    try {
+        const res = await fetch(`${API}/users/register/`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username,
+                password,
+                is_student: isStudentRole,
+                is_donor: !isStudentRole
+            })
+        });
+
+        if (res.ok) {
+            alert("Registration successful! Please log in.");
+            location.href = "login.html";
+        } else {
+            const data = await res.json();
+            alert(data.error || "Registration failed. Username might be taken.");
+        }
+    } catch (err) {
+        alert("Server connection failed.");
+    }
+};
+
+/* ✅ UI HELPER: TOGGLE PASSWORD VISIBILITY */
+window.togglePassword = function (inputId) {
+    const input = document.getElementById(inputId);
+    const icon = document.getElementById(`eye-icon-${inputId}`);
+    
+    if (input.type === "password") {
+        input.type = "text";
+        icon.classList.add("text-blue-600");
+        icon.classList.remove("text-slate-400");
+    } else {
+        input.type = "password";
+        icon.classList.remove("text-blue-600");
+        icon.classList.add("text-slate-400");
+    }
+};
+
+/* ✅ SMART ROLE SELECTION */
+window.handleRoleSelection = function(targetRole) {
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (user) {
+        // If logged in as donor but clicked student (or vice versa)
+        const isWrongRole = (targetRole === 'student' && user.is_donor) || 
+                            (targetRole === 'donor' && user.is_student);
+
+        if (isWrongRole) {
+            if (confirm(`You are currently logged in as a ${user.is_donor ? 'Donor' : 'Student'}. Log out to continue?`)) {
+                localStorage.clear();
+                window.location.href = "login.html";
+            }
+            return;
+        }
+
+        // If logged in as the CORRECT role, just go to that dashboard
+        window.location.href = user.is_student ? "student.html" : "donor.html";
+    } else {
+        // If not logged in at all, go to registration
+        window.location.href = "register.html";
+    }
+};

@@ -5,20 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Dashboard | EduSupport</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
 
 <body class="bg-slate-100 min-h-screen">
 
 <script>
-  // Auth Check: Redirect if not a student
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (!user || !user.is_student) location.replace("index.html");
+  const userData = JSON.parse(localStorage.getItem("user"));
+  if (!userData || !userData.is_student) {
+      window.location.replace("index.html");
+  }
 </script>
 
 <div id="navbar-container"></div>
-<script src="navbar.js"></script>
 
-<div class="container mx-auto p-6 max-w-5xl"> 
+<div class="container mx-auto p-6 pt-24 max-w-5xl"> 
   
   <h2 class="text-3xl font-bold mb-8 text-slate-800 text-center">My Support Dashboard</h2>
 
@@ -67,6 +69,7 @@
 </div>
 
 <script src="app.js"></script>
+<script src="navbar.js"></script>
 
 </body>
 </html>

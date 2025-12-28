@@ -1,48 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>EduSupport</title>
-
-  <script>
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (user?.is_student) location.href = "student.html";
-    if (user?.is_donor) location.href = "donor.html";
-  </script>
-
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduSupport | Empowering Students through Transparency</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
 </head>
+<body class="bg-slate-50 text-slate-900">
 
-<body class="bg-slate-100 flex items-center justify-center h-screen">
+    <div id="navbar-container"></div>
 
-  <!-- Navbar will be injected here -->
-  <div id="navbar-container"></div>
-  <script src="navbar.js"></script>
+    <header class="container mx-auto px-6 py-20 lg:py-32 flex flex-col items-center text-center">
+        <span class="bg-blue-50 text-blue-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-6">Transparency in Giving</span>
+        <h1 class="text-5xl lg:text-7xl font-bold text-slate-900 mb-8 max-w-4xl leading-tight">
+            Education is a right, <span class="text-blue-600">not a luxury.</span>
+        </h1>
+        <p class="text-lg text-slate-600 mb-10 max-w-2xl leading-relaxed">
+            EduSupport connects students in need with donors who care. We ensure every dollar is tracked, so you can see the direct impact of your generosity.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4">
+        <a href="javascript:void(0)" onclick="handleRoleSelection('student')" 
+           class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 transition shadow-xl shadow-blue-200 active:scale-95 text-center">
+            I am a Student
+        </a>
+        <a href="javascript:void(0)" onclick="handleRoleSelection('donor')" 
+           class="bg-white border border-slate-200 text-slate-800 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-slate-50 transition active:scale-95 text-center">
+            I want to Donate
+        </a>
+    </div>
+    </header>
 
-<body class="bg-slate-100 flex items-center justify-center h-screen">
-
-<div class="bg-white p-6 rounded w-96 space-y-4">
-  <h2 class="text-xl font-bold text-center">EduSupport</h2>
-
-  <select id="role" class="border p-2 w-full">
-    <option value="student">Student</option>
-    <option value="donor">Donor</option>
-  </select>
-
-  <input id="username" placeholder="Username" class="border p-2 w-full">
-  <input id="email" placeholder="Email" class="border p-2 w-full">
-  <input id="password" type="password" placeholder="Password" class="border p-2 w-full">
-
-  <button id="registerBtn" class="bg-blue-600 text-white w-full p-2">Register</button>
-
-  <p class="text-center text-sm">
-  Already registered?
-  <a href="login.html" class="text-blue-600 underline">Login</a>
-  </p>
-</div>
-
-<script src="app.js"></script>
-</body>
-
-<script src="app.js"></script>
+    <footer class="border-t border-slate-200 py-12">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-slate-400 text-sm">© 2025 EduSupport Project. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="app.js"></script>
+    <script src="navbar.js"></script>
 </body>
 </html>
