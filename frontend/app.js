@@ -1,5 +1,5 @@
-const API = "http://127.0.0.1:8000/api";
-
+// const API = "http://127.0.0.1:8000/api";
+const API = "https://community-student-support-tracker.onrender.com";
 /* ✅ AUTH HELPER */
 window.authHeaders = () => ({
     "Content-Type": "application/json",
