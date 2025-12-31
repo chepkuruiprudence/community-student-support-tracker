@@ -20,7 +20,7 @@ from config.views import root
 
 urlpatterns = [
     path('', root),
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('api/users/', include('users.urls')), 
     path('api/needs/', include('needs.urls')),
     path('api/expenses/', include('expenses.urls')),

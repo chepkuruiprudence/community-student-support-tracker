@@ -1,8 +1,8 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ExpenseViewSet  # assuming you have this
+from rest_framework.routers import SimpleRouter
+from .views import ExpenseViewSet  
 
-router = DefaultRouter()
+router = SimpleRouter()
 router.register(r'', ExpenseViewSet, basename='expense')
 
 urlpatterns = [
