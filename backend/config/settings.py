@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-6+3(2css((+&#3qqi6@s$5h=hn!j7@=oltatq_3*-^zir1pahg
 DEBUG = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://community-student-support-tracker.vercel.app/",
+    "https://community-student-support-tracker.vercel.app",
     "http://localhost:5500", 
 ]
 
